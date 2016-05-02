@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="LunchVoting:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/LunchVoting_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="LunchVoting/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="LunchVoting" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="module" name="JUnit4" module-name="LunchVoting" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.18" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
