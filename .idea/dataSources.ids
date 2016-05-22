@@ -8,10 +8,12 @@
     <schema name="public" catalog="d7ft41fcr4ghem"/>
     <table name="dishes" schema="public" catalog="d7ft41fcr4ghem" type="TABLE">
       <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgnZGlzaGVzX2lkX3NlcSc6OnJlZ2NsYXNzKQ==" autoIncrement="true"/>
+      <column name="lunch_id" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="name" sqlType="varchar" precision="20" scale="0" nullable="false" jdbcType="12"/>
       <column name="description" sqlType="varchar" precision="100" scale="0" nullable="true" jdbcType="12"/>
       <column name="price" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="dishes_pkey" columns="id"/>
+      <foreign-key name="dishes_lunch_id_fkey" columns="lunch_id" ref-table="lunches" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="lunches_dishid_fkey" table="lunches" schema="public" catalog="d7ft41fcr4ghem" columns="dishid"/>
     </table>
     <table name="dishes_id_seq" schema="public" catalog="d7ft41fcr4ghem" type="SEQUENCE">
@@ -34,6 +36,7 @@
       <primary-key name="lunches_pkey" columns="id"/>
       <foreign-key name="lunches_dishid_fkey" columns="dishid" ref-table="dishes" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="lunches_restid_fkey" columns="restid" ref-table="restaurants" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="dishes_lunch_id_fkey" table="dishes" schema="public" catalog="d7ft41fcr4ghem" columns="lunch_id"/>
     </table>
     <table name="lunches_id_seq" schema="public" catalog="d7ft41fcr4ghem" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -91,6 +94,7 @@
       <column name="email" sqlType="varchar" precision="20" scale="0" nullable="false" jdbcType="12"/>
       <column name="password" sqlType="varchar" precision="20" scale="0" nullable="false" jdbcType="12"/>
       <column name="registered" sqlType="date" precision="13" scale="0" nullable="true" jdbcType="91"/>
+      <column name="enabled" sqlType="bool" precision="1" scale="0" nullable="true" jdbcType="-7"/>
       <primary-key name="users_pkey" columns="id"/>
       <exported-key name="roles_userid_fkey" table="roles" schema="public" catalog="d7ft41fcr4ghem" columns="userid"/>
       <exported-key name="votes_userid_fkey" table="votes" schema="public" catalog="d7ft41fcr4ghem" columns="userid"/>

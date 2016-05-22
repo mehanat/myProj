@@ -22,19 +22,19 @@ public class Dish extends NamedEntity {
 
     @Column(name = "description")
     protected String description;
-    @NotNull
-    @Column(name = "price")
-    protected Integer price;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "lunches",
-    joinColumns = @JoinColumn(name = "dishId"),
-    inverseJoinColumns = @JoinColumn(name = "restId")
-    )
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    protected Set<Restaurant> restaurants;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "lunch_id")
+    protected Lunch lunch;
+
 
     public Dish(){}
+
+    public Dish(String name, String description) {
+        super();
+        this.name=name;
+        this.description = description;
+    }
 
     public String getDescription() {
         return description;
@@ -44,20 +44,12 @@ public class Dish extends NamedEntity {
         this.description = description;
     }
 
-    public Integer getPrice() {
-        return price;
+
+    public Lunch getLunch() {
+        return lunch;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-
-    public Set<Restaurant> getRestaurants() {
-        return restaurants;
-    }
-
-    public void setRestaurants(Set<Restaurant> restaurants) {
-        this.restaurants = restaurants;
+    public void setLunch(Lunch lunch) {
+        this.lunch = lunch;
     }
 }

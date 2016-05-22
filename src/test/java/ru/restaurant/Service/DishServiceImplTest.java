@@ -36,8 +36,6 @@ public class DishServiceImplTest {
     public void testSave() throws Exception {
         Dish dish=new Dish();
         dish.setName("test");
-        //dish.setId(1);
-        dish.setPrice(20);
         dishService.save(dish);
     }
 
@@ -50,14 +48,5 @@ public class DishServiceImplTest {
     @Test
     public void testDelete() throws Exception {
         assertTrue(dishService.delete(1));
-    }
-
-    @Test
-    public void testGetByDate() throws Exception {
-        List<Dish> dishes = dishService.getByDate(1, LocalDate.now());
-        List<Dish> dishes2 = dishService.getByDate(1, LocalDate.now());
-        Object d=dishes.iterator().next();
-        int dishId= ((Dish)d).getId();
-        assertEquals(dishId, 1);
     }
 }

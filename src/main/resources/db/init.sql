@@ -4,27 +4,33 @@ DROP TABLE IF EXISTS restaurants CASCADE ;
 DROP TABLE IF EXISTS votes CASCADE ;
 DROP TABLE IF EXISTS users CASCADE ;
 DROP TABLE IF EXISTS roles CASCADE ;
+DELETE FROM lunches_id_seq;
+DELETE FROM dishes_id_seq;
+DELETE FROM restaurants_id_seq;
+DELETE FROM roles_id_seq;
+DELETE FROM votes_id_seq;
+DELETE FROM users_id_seq;
 
 CREATE TABLE restaurants(
   id SERIAL PRIMARY KEY,
   name VARCHAR(20)
 );
 
-CREATE TABLE dishes(
-id SERIAL PRIMARY KEY,
-name VARCHAR(20) NOT NULL,
-description VARCHAR(100),
-price INT NOT NULL
-);
 
 CREATE TABLE lunches(
   id SERIAL PRIMARY KEY,
+  name VARCHAR(20),
   date DATE,
-  dishId INT REFERENCES dishes(id) ON DELETE CASCADE ,
+  price INT NOT NULL,
   restId INT REFERENCES restaurants(id) ON DELETE CASCADE
 );
 
-
+CREATE TABLE dishes(
+  id SERIAL PRIMARY KEY,
+  lunch_id INT REFERENCES lunches(id) ON DELETE CASCADE NOT NULL ,
+  name VARCHAR(20) NOT NULL,
+  description VARCHAR(100)
+);
 
 CREATE TABLE users(
   id SERIAL PRIMARY KEY,
@@ -43,6 +49,5 @@ CREATE TABLE roles(
 CREATE TABLE votes(
   id SERIAL PRIMARY KEY,
   userId INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  date DATE NOT NULL,
-  restId INT NOT NULL REFERENCES restaurants(id) ON DELETE CASCADE
+  lunchId INT NOT NULL REFERENCES lunches(id) ON DELETE CASCADE
 )

@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ru.restaurant.model.Lunch;
 import ru.restaurant.model.Restaurant;
 import ru.restaurant.model.User;
 import ru.restaurant.model.Vote;
@@ -37,6 +38,11 @@ public class UserDAOimpl implements UserDAO {
         return currentSession().get(User.class, id);
     }
 
+    @Override
+    public User getByEmail(String email) {
+        return (User) currentSession().createQuery("FROM User WHERE email=:email").setString("email", email).list().get(0);
+    }
+
     public User save(User user) {
         if (user.isNew()){
             int id=(Integer)currentSession().save(user);
@@ -49,10 +55,9 @@ public class UserDAOimpl implements UserDAO {
         return currentSession().createQuery("DELETE FROM User WHERE id=:id").setInteger("id", id).executeUpdate()>0;
     }
 
-    public boolean vote(User user, Restaurant restaurant, LocalDateTime dateTime) {
+    public boolean vote(User user, int lunchId, LocalDateTime dateTime) {
         Vote vote=new Vote();
-        vote.setDate(Date.from(dateTime.toInstant(ZoneOffset.UTC)));
-        vote.setRestid(restaurant.getId());
+        vote.setLunch(currentSession().load(Lunch.class, lunchId));
         vote.setUserid(user.getId());
 
         return ((Integer)currentSession().save(vote))>0;

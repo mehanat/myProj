@@ -5,10 +5,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.restaurant.model.Dish;
+import ru.restaurant.model.Lunch;
 import ru.restaurant.model.Restaurant;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Анатолий on 26.04.2016.
@@ -29,9 +29,6 @@ public class RestaurantDAOimpl implements RestaurantDAO {
         return (List<Restaurant>) currentSession().createQuery("FROM Restaurant").list();
     }
 
-    public Set<Dish> getAllDishes(int restId) {
-            return currentSession().load(Restaurant.class, restId).getDishes();
-    }
 
     public Restaurant save(Restaurant restaurant) {
         if (restaurant.isNew()){
@@ -43,5 +40,41 @@ public class RestaurantDAOimpl implements RestaurantDAO {
 
     public boolean delete(int id) {
         return currentSession().createQuery("DELETE FROM Restaurant WHERE id=:id").setInteger("id", id).executeUpdate()>0;
+    }
+
+    public Restaurant get(int id) {
+        return currentSession().get(Restaurant.class, id);
+    }
+
+    public void saveLunch(Date date, Set<Dish> lunch, final int id){
+
+        for (Dish dish:lunch) {
+
+            currentSession().createSQLQuery("INSERT INTO lunches(date, dishid, restid) VALUES (:date, :dishid, :restid)")
+                    .setDate("date", date)
+                    .setInteger("dishid", dish.getId())
+                    .setInteger("restid", id).executeUpdate();
+        }
+    }
+
+    public Map<Lunch, Integer> getLunchesRating(int id) {
+        Map<Lunch, Integer> rating=new HashMap<Lunch, Integer>();
+
+        List<Lunch> lunches=(List<Lunch>)currentSession().createQuery("FROM Lunch lunch WHERE restid=:id")
+                .setInteger("id", id).list();
+        for (Lunch lunch:lunches){
+            rating.put(lunch, lunch.getVotes().size());
+        }
+        return rating;
+    }
+
+    public Map<Lunch, Integer> getLunchesRating(Date date) {
+        Map<Lunch, Integer> rating=new HashMap<Lunch, Integer>();
+        List<Lunch> lunches=(List<Lunch>)currentSession().createQuery("FROM Lunch lunch WHERE date=:date")
+                .setDate("date", date).list();
+        for (Lunch lunch:lunches){
+            rating.put(lunch, lunch.getVotes().size());
+        }
+        return rating;
     }
 }

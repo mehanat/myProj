@@ -17,21 +17,18 @@ import java.util.Set;
 @Table(name = "restaurants")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Restaurant extends NamedEntity {
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "lunches",
-            joinColumns = @JoinColumn(name = "restId"),
-            inverseJoinColumns = @JoinColumn(name = "dishId")
-    )
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "restaurant")
     @JsonIgnore
-    private Set<Dish> dishes;
+    private Set<Lunch> lunches;
 
     public Restaurant(){}
 
-    public Set<Dish> getDishes() {
-        return dishes;
+    public Set<Lunch> getLunches() {
+        return lunches;
     }
 
-    private void setDishes(Set<Dish> dishes) {
-        this.dishes = dishes;
+    public void setLunches(Set<Lunch> lunches) {
+        this.lunches = lunches;
     }
 }

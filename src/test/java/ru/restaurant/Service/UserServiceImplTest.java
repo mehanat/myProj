@@ -63,7 +63,6 @@ public class UserServiceImplTest {
     @Test
     public void testVote() throws Exception {
         User user = new User(); user.setId(1);
-        Restaurant restaurant=new Restaurant(); restaurant.setId(1);
-        userService.vote(user, restaurant, LocalDateTime.now());
+        userService.vote(user, 1, LocalDateTime.now());
     }
 }

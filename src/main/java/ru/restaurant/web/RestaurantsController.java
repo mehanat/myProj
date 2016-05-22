@@ -16,12 +16,12 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/restaurants")
-public class RestaurantsRestController {
+public class RestaurantsController {
 
     @Autowired
     RestaurantService restaurantService;
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "ajax", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getRestaurants(){
         return restaurantService.getAll();
     }

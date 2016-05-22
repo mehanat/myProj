@@ -14,5 +14,5 @@ public interface UserService {
     User getById(int id);
     User save(User user);
     boolean delete(int id);
-    boolean vote(User user, Restaurant restaurant, LocalDateTime dateTime);
+    boolean vote(User user, int restId, LocalDateTime dateTime);
 }

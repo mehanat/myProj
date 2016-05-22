@@ -35,7 +35,4 @@ public class DishServiceImpl implements DishService {
         return dishDAO.save(dish);
     }
 
-    public List<Dish> getByDate(int restId, LocalDate date) {
-        return dishDAO.getByDate(restId, date);
-    }
 }

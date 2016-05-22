@@ -1,9 +1,13 @@
 package ru.restaurant.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.restaurant.DAO.UserDAO;
+import ru.restaurant.LoggedUser;
 import ru.restaurant.model.Restaurant;
 import ru.restaurant.model.User;
 
@@ -15,7 +19,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     UserDAO userDAO;
@@ -36,7 +40,16 @@ public class UserServiceImpl implements UserService {
         return userDAO.delete(id);
     }
     @Transactional
-    public boolean vote(User user, Restaurant restaurant, LocalDateTime dateTime) {
-        return userDAO.vote(user, restaurant, dateTime);
+    public boolean vote(User user, int restId, LocalDateTime dateTime) {
+        return userDAO.vote(user, restId, dateTime);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userDAO.getByEmail(email);
+        if (user == null){
+            throw new UsernameNotFoundException("User "+ email + " is not found!");
+        } else
+        return new LoggedUser(user);
     }
 }

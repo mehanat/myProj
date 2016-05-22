@@ -15,5 +15,4 @@ public interface DishDAO {
     Dish get(int id);
     boolean delete(int id);
     Dish save(Dish dish);
-    List<Dish> getByDate(int restId, LocalDate date);
 }

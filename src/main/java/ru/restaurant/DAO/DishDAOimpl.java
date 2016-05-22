@@ -49,13 +49,4 @@ public class DishDAOimpl implements DishDAO {
         else currentSession().update(dish);
         return dish;
     }
-
-    public List<Dish> getByDate(int restId, LocalDate date) {
-        return (List<Dish>) currentSession().createSQLQuery("SELECT * FROM dishes WHERE id IN (SELECT dishid FROM lunches WHERE date=:date)")
-                .addEntity(Dish.class)
-                .setDate("date", TimeConverter.toDate(date))
-                .setCacheable(true)
-                .setCacheRegion("dishes")
-                .list();
-    }
 }

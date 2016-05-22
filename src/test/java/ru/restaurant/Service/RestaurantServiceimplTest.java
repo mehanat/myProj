@@ -11,6 +11,8 @@ import ru.restaurant.Service.RestaurantService;
 import ru.restaurant.model.Dish;
 import ru.restaurant.model.Restaurant;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -36,11 +38,6 @@ public class RestaurantServiceimplTest {
         assertEquals(restaurants.size(), 1);
     }
 
-    @Test
-    public void testGetAllDishes() throws Exception {
-        Set<Dish> dishes =  restaurantService.getAllDishes(1);
-        assertEquals(dishes.size(), 1);
-    }
 
     @Test
     public void testSave() throws Exception {
@@ -50,9 +47,20 @@ public class RestaurantServiceimplTest {
         restaurantService.save(restaurant);
     }
 
+
     @Test
     public void testDelete() throws Exception {
         boolean res=restaurantService.delete(1);
         assertTrue(res);
+    }
+
+    @Test
+    public void testGet() throws Exception {
+        restaurantService.get(1);
+    }
+
+    @Test
+    public void testGetRating() throws Exception {
+        restaurantService.getLunchesRating(1);
     }
 }

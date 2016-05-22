@@ -8,7 +8,8 @@
        <mvc:annotation-driven/>
        <context:component-scan base-package="ru.restaurant.web"/>
 
-       <!--<mvc:resources mapping="/resources/**" location="/resources"/>-->
+       <mvc:resources mapping="/resources/**" location="resources/"/>
+     <!--  <mvc:resources mapping="/webjars/bootstrap/**" location="classpath:bootstrap-3.3.6.jar/META-INF/resources/webjars/"/>-->
 
        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
               <property name="prefix" value="/WEB-INF/jsp/"/>

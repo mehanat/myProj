@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Анатолий on 01.05.2016.
  */
-public class RestaurantsRestControllerTest {
+public class RestaurantsControllerTest {
 
     @Test
     public void testGetRestaurants() throws Exception {

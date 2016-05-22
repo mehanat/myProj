@@ -1,9 +1,13 @@
 package ru.restaurant.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,6 +16,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "users")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 public class User extends NamedEntity {
 
     @Column(name = "email")
@@ -20,7 +25,8 @@ public class User extends NamedEntity {
     protected String email;
 
     @Column(name = "password")
-    @NotEmpty
+    @NotNull
+    @Size(min = 6, message = "must be 5 characters minimum")
     protected String password;
 
     @Column(name = "registered")
@@ -29,8 +35,11 @@ public class User extends NamedEntity {
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "userid"))
     @Column(name = "role")
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
+    @JsonIgnore
     protected Set<Role> roles;
+
+
 
     public User(){
 
@@ -67,4 +76,7 @@ public class User extends NamedEntity {
     public void setRegistered(Date registered) {
         this.registered = registered;
     }
+
+
+
 }
